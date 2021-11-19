@@ -12,7 +12,7 @@ pipeline {
         TF_HOME = tool('terraform')
         TF_INPUT = "0"
         TF_IN_AUTOMATION = "TRUE"
-        //TF_VAR_consul_address = "localhost"
+        TF_VAR_consul_address = "localhost"
         TF_LOG = "WARN"
         CONSUL_HTTP_TOKEN = credentials('networking_consul_token')
         AWS_ACCESS_KEY_ID = credentials('aws_access_key')
@@ -24,7 +24,6 @@ pipeline {
         stage('NetworkInit'){
             steps {
                 dir('m8/networking/'){
-                    sh "echo TF_VAR_consul_address is $TF_VAR_consul_address"
                     sh 'terraform --version'
                     sh "terraform init --backend-config='path=${params.CONSUL_STATE_PATH}'"
                 }
